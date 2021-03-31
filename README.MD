@@ -145,7 +145,6 @@ $ expo install expo-font @expo-google-fonts/ubuntu @expo-google-fonts/roboto
 ## **:books: REFERÊNCIAS**
 
 - [React + TypeScript Cheat Sheet](https://github.com/typescript-cheatsheets/react-typescript-cheatsheet)
-- [Blog Rocketseat](https://blog.rocketseat.com.br/)
 - [ReactJS](https://reactjs.org/docs/getting-started.html) | [ReactJS pt-BR](https://pt-br.reactjs.org/docs/getting-started.html)
 - [TypeScript](https://www.typescriptlang.org/docs/home.html)
 - [React Native](https://reactnative.dev/docs/getting-started)
@@ -153,5 +152,3 @@ $ expo install expo-font @expo-google-fonts/ubuntu @expo-google-fonts/roboto
 - [Knex](http://knexjs.org/)
 - [Express](https://expressjs.com/pt-br/)
 - [Node](https://nodejs.org/en/)
-- [Celebrate](https://github.com/arb/celebrate)
-- [Joi](https://hapi.dev/module/joi/)
