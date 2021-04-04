@@ -1,4 +1,4 @@
-import React,{useEffect, useState} from 'react';
+import React,{FormEvent, useEffect, useState} from 'react';
 import {useNavigation} from '@react-navigation/native';
 import {Feather as Icon} from '@expo/vector-icons'
 import {View,ImageBackground, Image,StyleSheet, Text,TextInput,Platform,KeyboardAvoidingView, Picker} from 'react-native';
@@ -28,7 +28,8 @@ function Create() {
     const requestBody = JSON.stringify({
       name, price, categories:selectedValue
     })
-     const response = api.post('products',name)
+    
+    const response = api.post('products',{name,price,selectedValue})
       .then(()=>{
         navigation.navigate('List')
         alert('Produto cadastrado')

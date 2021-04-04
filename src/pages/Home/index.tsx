@@ -4,16 +4,19 @@ import {View,ImageBackground, Image,StyleSheet, Text,TextInput,Platform,Keyboard
 import {RectButton} from 'react-native-gesture-handler';
 import {useNavigation} from '@react-navigation/native';
 
+// import auth from 'service'
+// comecar com funcao de autenticacao 
+
 const Home = () => {
-  const[uf,setUf]= useState('');
-  const[city,setCity]= useState('');
+  const[cpf,setCpf]= useState('');
+  const[password,setPassword]= useState('');
  
 const navigation = useNavigation();
 
 function handleNavigateToPoints(){
     navigation.navigate('Create' ,{
-      uf,
-      city,
+      cpf,
+      password,
     });
 }
     return (
@@ -37,18 +40,19 @@ function handleNavigateToPoints(){
                     <TextInput 
                       style={styles.input}
                       placeholder= "Digite seu CPF"
-                      value={uf}
+                      value={cpf}
                       maxLength={2}
                       autoCapitalize="characters"
                       autoCorrect={false}
-                      onChangeText={text => setUf(text)}
+                      onChangeText={text => setCpf(text)}
                     />
                     <TextInput
                         style={styles.input}
                         placeholder= "Digite sua Senha"
-                        value={uf}
+                        value={password}
                         autoCorrect={false}
-                        onChangeText={text => setUf(text)}
+                        
+                        onChangeText={text => setPassword(text)}
                     />
 
                 <RectButton 

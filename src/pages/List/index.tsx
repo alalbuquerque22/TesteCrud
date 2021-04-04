@@ -1,10 +1,10 @@
-import React,{useEffect, useState} from 'react';
+import React,{useEffect, useRef, useState, version} from 'react';
 import {Feather as Icon} from '@expo/vector-icons'
-import {View,ImageBackground, Image,StyleSheet, Text,TextInput,Platform,KeyboardAvoidingView} from 'react-native';
+import {View,ImageBackground, Image,StyleSheet, Text,TextInput,Platform,KeyboardAvoidingView, Modal} from 'react-native';
 import {RectButton, ScrollView} from 'react-native-gesture-handler';
 import {useNavigation} from '@react-navigation/native';
 import api from '../../services/api';
-
+import { Modalize } from 'react-native-modalize';
 
 interface Product{
   id:number;
@@ -15,26 +15,44 @@ interface Product{
 
 const List = () => {
 
-
+  const modalizeRef = useRef<Modalize>(null)
   const [products,setProducts] = useState<Product[]>([])
   const navigation = useNavigation();
-
+  const [productID,setProductId] = useState<Product[]>([])
+ 
   function handleNavigateToPoints(){
       navigation.navigate('Create');
   }
-  const handleDelete =()=>{
-   // api.delete('products:id').then(()=>{})
+  const handleDelete = (propsID:any)=>{
+  //  api.delete(`products:${props}`).then((response)=>{setProducts(response.data)})
+     console.log('deleta o ID: ',propsID);
+     alert('Você deletou o produto!')
+    
+  }
+  const handleAlterModal = (props:any) =>{
+  //chama modal 
+  modalizeRef.current?.open();
+
+  // monta produto por id 
+ 
+  setProductId(props)
+
+  console.log('objeto montado por id vindo do map: ',productID);
 
   }
   const handleAlter = () =>{
-
-  //  api.put('products:id').then(()=>{})
-  }
+   
+    
+    
+   // console.log('objeto completo ', props)
+ 
+    //  api.put('products:id').then(()=>{})
+    }
   useEffect(()=>{
     api.get('products').then(response =>{
       setProducts(response.data)
 
-    console.log(response.data);
+    console.log('coleta de dados!=> \n' ,response.data);
     })
 
     
@@ -73,7 +91,7 @@ const List = () => {
                <View style={styles.managementButton}>
                    <RectButton 
                      style={styles.buttonAlter}
-                     onPress={handleAlter}
+                     onPress={()=>handleAlterModal(product)}
                      >
                          <View style={styles.buttonIcon}>
                            <Text>
@@ -86,28 +104,80 @@ const List = () => {
                      </RectButton>
                      <RectButton 
                       style={styles.buttonDelete}
-                      onPress={handleDelete}
+                      onPress={()=>handleDelete(product.id)}
                      >
                          <View style={styles.buttonIcon}>
                            <Text>
-                               <Icon name="arrow-right" color="#FFF" size={24}/>
+                               <Icon name="trash" color="#FFF" size={24}/>
                            </Text>
                          </View>
                          <Text style={styles.buttonText}>
                              Deletar
                          </Text>
                      </RectButton>
+
+                        
+                   
                    </View>
+                       
              </View>
-         
+              
 
-))}
-  </View>
+            ))}
+            
+          </View>
 
-          
-        
+
+
+       
           </ScrollView>
+        
 
+          <Modalize ref={modalizeRef}
+                    snapPoint={360}>
+                        <View 
+                        style={{
+                          marginTop:50,
+                          flex:1,
+                          alignContent:'center',
+                          justifyContent:'center',
+                          alignItems:'center'
+                        }}
+                        >
+                          <TextInput 
+                            style={[styles.input,{backgroundColor:'#eeeeee',color:'#6C6C80',width:'80%'}]}
+                            placeholder="Nome do produto: "                     
+                            autoCapitalize="characters"
+                            autoCorrect={false}
+                          />
+                            <TextInput 
+                            style={[styles.input,{backgroundColor:'#eeeeee',color:'#6C6C80',width:'80%'}]}
+                            placeholder= "Preço: "                      
+                            autoCapitalize="characters"
+                            autoCorrect={false}
+                          />
+                            <TextInput 
+                            style={[styles.input,{backgroundColor:'#eeeeee',color:'#6C6C80',width:'80%'}]}
+                            placeholder= "Categoria: "                      
+                            autoCapitalize="characters"
+                            autoCorrect={false}
+                          />
+                      
+                          <RectButton 
+                          style={[styles.buttonAlter, {backgroundColor:'#34CB79',marginTop:20}]}
+                          onPress={handleAlter}
+                          >
+                              <View style={styles.buttonIcon}>
+                                <Text>
+                                    <Icon name="arrow-up" color="#FFF" size={24}/>
+                                </Text>
+                              </View>
+                              <Text style={styles.buttonText}>
+                                  Salvar Alterações
+                              </Text>
+                          </RectButton>
+                  </View>
+                </Modalize>
       </ImageBackground>
 
   </KeyboardAvoidingView>
